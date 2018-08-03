@@ -52,7 +52,7 @@ if (isset($_GET['date'])) {
 
 ?>
     </select>
-    <input type="submit" text="다시그리기">
+    <input type="submit" value="다시그리기" />
 </form>
 <div id="curve_chart" style="width: 100%; height: 600px"></div>
 
