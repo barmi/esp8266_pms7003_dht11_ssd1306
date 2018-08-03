@@ -9,6 +9,7 @@ include_once 'db.config';
 $con= new mysqli($db_host, $db_user, $db_passwd, $db_dbname)or die("Could not connect to mysql".mysqli_error($con));
 $con->query("set names utf8");
 
+// default id & date
 $id = 'junho';
 $date = date("Y-m-d");
 if (isset($_GET['id'])) {
@@ -23,7 +24,7 @@ if (isset($_GET['date'])) {
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!-- script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script -->
 </head>
 <body>
 <div id="curve_chart" style="width: 100%; height: 600px"></div>
