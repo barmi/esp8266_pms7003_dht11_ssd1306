@@ -67,7 +67,7 @@ if (isset($_GET['date'])) {
         data.addColumn('number','온도');
         data.addColumn('number','PM1.0');
         data.addColumn('number','PM2.5');
-        data.addColumn('number','PM25');
+        data.addColumn('number','PM10');
         data.addRows([
 <?php
 /*
