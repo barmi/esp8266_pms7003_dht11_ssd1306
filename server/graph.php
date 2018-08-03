@@ -27,6 +27,33 @@ if (isset($_GET['date'])) {
     <!-- script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script -->
 </head>
 <body>
+<form action="graph.php" method="get">
+    id: <select name="id">
+<?php
+    //$sql = "SELECT DISTINCT year(time),month(time),day(time) FROM `iot`";
+    $sql = "SELECT DISTINCT userid FROM `iot`";
+    $result = mysqli_query($con, $sql);
+    while ($row = mysqli_fetch_array($result))
+    {
+        $sel_str = ($row['userid'] == $id) ? "selected" : "";
+        echo "<option value='".$row['userid']."' ".$sel_str." >".$row['userid']."</option>";
+    }
+?>
+    </select>
+    date: <select name="date">
+<?php
+    $sql = "SELECT DISTINCT DATE_FORMAT(time, '%Y-%m-%d') as d FROM `iot`";
+    $result = mysqli_query($con, $sql);
+    while ($row = mysqli_fetch_array($result))
+    {
+        $sel_str = ($row['d'] == $date) ? "selected" : "";
+        echo "<option value='".$row['d']."' ".$sel_str." >".$row['d']."</option>";
+    }
+
+?>
+    </select>
+    <input type="submit" text="다시그리기">
+</form>
 <div id="curve_chart" style="width: 100%; height: 600px"></div>
 
 <script type="text/javascript">
