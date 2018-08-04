@@ -24,6 +24,11 @@ const char* ssid = "INPUT";
 const char* password = "INPUT";
 const char* id = "INPUT";
 
+// web connect
+int web_fail_count;
+int web_success_count;
+int web_last_httpcode;
+
 void setup() 
 {
   Serial.begin(9600);
@@ -68,7 +73,7 @@ void loop()
     }
   }
   static unsigned long OledTimer = millis();
-  static int tryCount = 0;
+  static int tryCount = 28;
   if (millis() - OledTimer >= 1000)
   {
     OledTimer = millis();
@@ -101,6 +106,7 @@ void loop()
     display.print(t, 1);
     display.println(" C");
     
+/*
     //display.setTextSize(1);
     //display.setTextColor(WHITE);
     display.print("PM1.0 : ");
@@ -112,13 +118,29 @@ void loop()
     display.print("PM10  : ");
     display.print(PM10);
     display.println(" ug/m3 ");
-  
+*/
+    display.println("PM1.0, 2.0, 10 :ug/m3");
+    display.print(PM1_0);
+    display.print(",");   
+    display.print(PM2_5);
+    display.print(",");   
+    display.print(PM10);
+    display.println(" ");
+
+    display.print(web_success_count);
+    display.print("(");
+    display.print(web_last_httpcode);
+    display.print(")");
+    display.print(web_fail_count);
+    display.println(" ");
+
     display.display();
+    
     if (++tryCount >= 30)
     {
-      tryCount = 0;
       if (WiFi.status() == WL_CONNECTED) 
       { //Check WiFi connection status
+        tryCount = 0;
         HTTPClient http;  //Declare an object of class HTTPClient
 
         String url = "http://barmi.dothome.co.kr/iot/record.php?";
@@ -131,15 +153,20 @@ void loop()
         
         http.begin(url);  //Specify request destination
         int httpCode = http.GET();                                                                  //Send the request
-     
+        web_last_httpcode = httpCode;
+        web_success_count++;
         if (httpCode > 0) { //Check the returning code
      
           String payload = http.getString();   //Get the request response payload
-          Serial.println(payload);                     //Print the response payload
+          //Serial.println(payload);                     //Print the response payload
      
         }
      
         http.end();   //Close connection
+      }
+      else
+      {
+        web_fail_count++;
       }
     }
   }
