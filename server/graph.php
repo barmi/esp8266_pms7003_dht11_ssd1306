@@ -83,7 +83,7 @@ if (isset($_GET['date'])) {
                 ."Humi, Temp, `PM1_0`, `PM2_5`, `PM10` "
                 ."FROM `iot` "
                 ."WHERE userid='".$id."' "
-                ."AND (time BETWEEN '".$date." 00:00:00' and '".$date." 23:59:59')";
+                ."AND (time BETWEEN '".$date." 00:00:00' and '".$date." 23:59:59') order by h,m,s";
         $result = mysqli_query($con, $sql);
         while ($row = mysqli_fetch_array($result))
         {
